@@ -1,0 +1,87 @@
+server:
+  port: 9000
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+file:
+  extension-heic: /usr/local/bin/tifig
+  extension-convert: /usr/local/bin/convert
+  extension-composite: /usr/local/bin/composite
+
+trabricks:
+  security:
+    oauth:
+      enabled: true
+      client-id: demo-api
+      client-secret: demo!@#
+      token-signing-key: a123456A
+      token-validity-days: 10
+      refresh-token-validity-days: 90
+    rest:
+      enabled: true
+
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://disk.creamcookie.cc/demo?autoReconnection=true&autoReconnectForPools=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=JST&allowPublicKeyRetrieval=true
+    username: demo
+    password: a123456A
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    io.jeongjaeeom.demo.api: DEBUG
+    org.springframework.security.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+app:
+  host: http://localhost:9000
+
+storage:
+  location: ~/Documents/demo-api/files
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost/demo?autoReconnection=true&autoReconnectForPools=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=JST&allowPublicKeyRetrieval=true
+    username: demo
+    password: a123456A
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    io.jeongjaeeom.demo.api: DEBUG
+    org.springframework.security.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  file: logs/demo-api.log
+
+app:
+  host: http://182.217.219.11:9000
+
+storage:
+  location: /home/demo/files
